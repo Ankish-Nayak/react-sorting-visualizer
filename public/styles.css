@@ -106,3 +106,7 @@ main {
   position: relative;
   border: 2px solid black;  
 } */
+
+.selectedBar {
+  background: red;
+}
