@@ -4,75 +4,77 @@ import Main from "./Main";
 
 export default function App() {
   const [bars, setBars] = React.useState(allNewBars); 
+  const [showRestart,setShowRestart] = React.useState(true);
   function randomBar(range) {
     return Math.floor(Math.random() * range);
-  }
-  function allNewBars(n = 20, range = 500) {
+  } 
+  function allNewBars(n = 5, range = 500) {
     let res = [];
     for (let i = 0; i < n; ++i) {
-      res.push(randomBar(range));
-    } 
+      res.push({
+        value: randomBar(range),
+        selected: false
+      });
+    }  
     return res;
-  }  
-  // useEffect(()=>{
-  //   return ()=>{
-  //     clearTimeout()
-  //   }
-  // },[])
+  }   
   function sortBars() { 
+    
     let steps = []; // we will use this store all steps in particular algorithm took to sort the array
     // 
-    
-    let array = [...bars];
+    function swap(arr,i,j){
+      let temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+    let array = [];
+    for(let i = 0; i<bars.length; ++i){
+      array.push(bars[i].value);
+    }
     let size = array.length;
     steps.push(array);
     const sleep = ms => new Promise(resolve => setTimeout(resolve,ms));
     (async () =>{
-      for(let step = 1; step<size; ++step){
-        let key = array[step];
-        let j = step-1;
- 
-        await sleep(20);
-        while(key < array[j] && j >= 0){ 
-          setBars([...array]);
-          await sleep(20); 
-
-          array[j+1] = array[j];
-          setBars([...array]);
-          await sleep(20);
+      setShowRestart(!showRestart);
+      for(let step = 1; step<size; ++step){ 
+        let j = step;
+        let newArray = [];
+        for(let i = 0; i<array.length; ++i){
+          newArray.push({
+            value: array[i],
+            selected: false
+          }); 
+        } 
+        await sleep(500); 
+        while(j > 0 && array[j] < array[j-1]){
+          newArray[j].selected = true;
+          newArray[j-1].selected = true;
+          setBars([...newArray]);
+          await sleep(200);
+          swap( array, j, j-1);
+          swap( newArray, j, j-1);
+          setBars([...newArray]);
+          await sleep(500);
+          newArray[j].selected = false;
+          newArray[j-1].selected = false;
           j--;
         } 
-        array[j + 1] = key; 
-        setBars([...array]);
+        setBars([...newArray]);
         await sleep(20);
-      }
-    })();
-    // for (let step = 1; step < size; step++) {
-    //   let key = array[step];
-    //   let j = step - 1;
-  
-    //   // Compare key with each element on the left of it until an element smaller than
-    //   // it is found.
-    //   // For descending order, change key<array[j] to key>array[j].
-    //   while (key < array[j] && j >= 0) {
-    //     array[j + 1] = array[j];
-    //     steps.push([...array]);
-    //     --j;
-    //   }
-    //   array[j + 1] = key;
-    //   steps.push([...array]); 
-    // } 
-    // (async () => {
-    //   for(let i = 0; i<steps.length; ++i){
-    //     console.log(steps[i]);
-    //     setBars(steps[i]);
-    //     await sleep(i);
-    //   }
-    // })();
+      }  
+      setBars(prevArray => [...prevArray]);
+    })(); 
+   ;
+  }
+  function reStart(){
+    console.log('click')
+    setBars((prevArray)=>{
+      return allNewBars();
+    });
   }
   return (
     <main>
-      <Sidebar sortBars={sortBars} />
+      <Sidebar sortBars={sortBars} reStart={reStart} showRestart={showRestart}/>
       <Main bars={bars} />
     </main>
   );

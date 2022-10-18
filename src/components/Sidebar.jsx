@@ -2,7 +2,8 @@ import React from "react";
 
 export default function Sidebar(props) {
 //   console.log("side bar rendered");
-  const { sortBars } = props;
+  const { sortBars, reStart, showRestart } = props;
+  // console.log(showRestart);
   return (
     <div className="sidebar">
       <h1 className="sidebar-heading">Algorithms</h1>
@@ -22,6 +23,7 @@ export default function Sidebar(props) {
       >
         sort
       </div>
+      {showRestart && <div className="sidebar-button" onClick={()=>reStart()}>New Array</div>}
     </div>
   );
 }

@@ -108,5 +108,5 @@ main {
 } */
 
 .selectedBar {
-  color: red;
+  background: red;
 }

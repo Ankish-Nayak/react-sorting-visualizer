@@ -7,7 +7,7 @@ export default function Main(props) {
     <div className="bars">
       {bars.map((bar, idx) => {
         {/* console.log("Main", bar); */}
-        return <Bar key={idx} idx={idx} height={bar}  />;
+        return <Bar key={idx} idx={idx} height={bar.value} selected={bar.selected}/>;
       })}
     </div>
   );
