@@ -77,7 +77,8 @@ main {
   top: 25%;
   left: 300px;
   transform: translate(-50%, 0);
-  position: absolute;
+  transition-timing-function: ease-in;
+  position: absolute; 
   /*  here we will explicitly add left property to make it as it mover along the x-axis  */
 }
 /* .main {  
@@ -106,3 +107,7 @@ main {
   position: relative;
   border: 2px solid black;  
 } */
+
+.selectedBar { 
+  background: red;
+}
