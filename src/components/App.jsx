@@ -4,10 +4,13 @@ import Main from "./Main";
 import bubbleSort from "./BubbleSort";
 import insertionSort from "./InsertionSort";
 import mergeSort from "./MergeSort";
+import selectionSort from "./SelectionSort";
+import quickSort from "./QuickSort";
+
 // done Changes here
 export default function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
-  const [sorting,setSorting] = React.useState(false);
+  const [sorting, setSorting] = React.useState(false);
   const [bars, setBars] = React.useState(allNewBars);
   const steps = React.useRef([]);
   const timeOuts = React.useRef([]); // used to store setTimeout reference to clear it
@@ -37,19 +40,21 @@ export default function App() {
         insertionSort(bars, stepClear, stepCopy, start);
         break;
       case "selectionSort":
+        selectionSort(bars, stepClear, stepCopy, start);
         break;
       case "mergeSort":
         mergeSort(bars, stepClear, stepCopy, start);
         break;
       case "quickSort":
+        quickSort(bars, stepClear, stepCopy, start);
         break;
       case "bubbleSort":
         bubbleSort(bars, stepClear, stepCopy, start);
-        break;  
+        break;
       default:
         setSorting(false);
         console.log("problem");
-    } 
+    }
   }
 
   function stepClear() {
@@ -71,15 +76,15 @@ export default function App() {
     console.log(steps.current);
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     let cnt = 0;
-    for (let i = 0; i < steps.current.length; ++i) { 
+    for (let i = 0; i < steps.current.length; ++i) {
       const b = steps.current[i];
-      const isLast = (i === steps.current.length-1 ? true : false);
-      let timeOut; 
+      const isLast = i === steps.current.length - 1 ? true : false;
+      let timeOut;
       (() => {
-        timeOut = setTimeout((steps,i) => {
+        timeOut = setTimeout((steps, i) => {
           setBars([...b]);
-          if(isLast){
-            console.log('done');
+          if (isLast) {
+            console.log("done");
             setSorting(false);
             setSelectedAlgorithm("");
           }
@@ -89,17 +94,9 @@ export default function App() {
     }
     console.log("start");
   }
-  function selectionSort() {
-    stepClear();
-    let tempBars = [];
-    bars.forEach((bar) => {
-      tempBars.push({
-        ...bar,
-      });
-    });
-  }
-
-  function quickSort() {}
+  // function reStart(){
+  //   setBars(allNewBars);
+  // }
 
   return (
     <main>
@@ -107,9 +104,11 @@ export default function App() {
         selectedAlgorithm={selectedAlgorithm}
         setSelectedAlgorithm={setSelectedAlgorithm}
         sortBars={sortBars}
-        sorting={sorting} 
+        sorting={sorting}
+        // reStart={reStart}
       />
-      <Main bars={bars} />
+      <Main bars={bars} 
+      />
     </main>
   );
-} 
+}

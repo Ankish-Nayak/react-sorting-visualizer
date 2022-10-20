@@ -61,7 +61,7 @@ export default function Sidebar(props) {
       >
         sort
       </div>
-      {/* {showRestart && <div className="sidebar-button" onClick={()=>reStart()}>New Array</div>} */}
+      {/* {!props.sorting && <div className="sidebar-button" onClick={()=>props.reStart()}>New Array</div>} */}
     </div>
   );
 }
