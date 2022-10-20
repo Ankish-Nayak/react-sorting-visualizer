@@ -1,8 +1,12 @@
 import React, { startTransition } from "react";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
+import bubbleSort from "./BubbleSort";
+import insertionSort from "./InsertionSort";
+import mergeSort from "./MergeSort";
 // done Changes here
 export default function App() {
+  // const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
   const [bars, setBars] = React.useState(allNewBars);
   const steps = React.useRef([]);
   const timeOuts = React.useRef([]); // used to store setTimeout reference to clear it
@@ -14,7 +18,7 @@ export default function App() {
   function randomBar(range) {
     return Math.floor(Math.random() * range);
   }
-  function allNewBars(n = 5 , range = 500) {
+  function allNewBars(n = 17, range = 500) {
     let res = [];
     for (let i = 0; i < n; ++i) {
       res.push({
@@ -25,14 +29,23 @@ export default function App() {
     return res;
   }
   function sortBars() {
-    setBars((prevBars) => {
-      let res = [];
-      for (let i = 0; i < prevBars.length; ++i) {
-        res.push(prevBars[i]);
-      }
-      res.sort((a, b) => a - b);
-      return res;
-    });
+    // switch (selectedAlgorithm) {
+    //   case "insertionSort":
+    //     insertionSort(bars, stepClear, stepCopy, start)
+    //     break;
+    //   case "selectionSort":
+    //     break;
+    //   case "mergeSort":
+    //     mergeSort(bars, stepClear, stepCopy, start);
+    //     break;
+    //   case "quickSort":
+    //     break;
+    //   case "bubbleSort":
+    //     bubbleSort(bars, stepClear, stepCopy, start);
+    //     break;  
+    //   default:
+    //     console.log("problem");
+    // } 
   }
 
   function stepClear() {
@@ -48,56 +61,6 @@ export default function App() {
       });
     });
     steps.current.push(newBars);
-  }
-  function insertionSort() {
-    console.log("called insertionSort");
-    // we will clear all the previous steps we had in steps array
-    stepClear();
-    const tempBars = [];
-
-    bars.forEach((bar) =>
-      tempBars.push({
-        ...bar,
-      })
-    );
-    console.log(tempBars);
-    console.log(tempBars.length);
-    for (let step = 1; step < tempBars.length; step++) {
-      console.log("ed");
-      let key = {
-        ...tempBars[step],
-      };
-      let j = step - 1;
-      // Compare key with each element on the left of it until an element smaller than
-      // it is found.
-      // For descending order, change key<tempBars[j] to key>tempBars[j].
-      if (key.value > tempBars[j].value) {
-        tempBars[j + 1].selected = tempBars[j].selected = 1;
-        stepCopy(tempBars);
-        // tempBars.forEach(bar => steps.current.push({
-        //   ...bar
-        // }));
-        tempBars[j + 1].selected = tempBars[j].selected = 0;
-        // do deep copy
-        stepCopy(tempBars);
-      }
-      console.log(step);
-      while (j >= 0 && key.value < tempBars[j].value) {
-        tempBars[j + 1].selected = tempBars[j].selected = 1;
-        // do deep copy
-        stepCopy(tempBars);
-        tempBars[j + 1] = { ...tempBars[j] };
-        tempBars[j + 1].selected = tempBars[j].selected = 0;
-        --j;
-      }
-      tempBars[j + 1] = { ...key };
-      console.log("d");
-      // do deep copy
-      stepCopy(tempBars);
-    }
-    // console.log(steps.current);
-    // console.log(tempBars);
-    start();
   }
   function start() {
     console.log("called start");
@@ -116,68 +79,35 @@ export default function App() {
       timeOuts.current.push(timeOut);
     }
   }
-  function bubbleSort() {
-    const tempBars = [];
+  function selectionSort() {
+    stepClear();
+    let tempBars = [];
     bars.forEach((bar) => {
       tempBars.push({
         ...bar,
       });
     });
-    stepClear();
-    for (let step = 0; step < tempBars.length; ++step) {
-      // loop to compare array elements
-      for (let i = 0; i < tempBars.length - step; ++i) {
-        // compare two adjacent elements
-        // change > to < to sort in descending order
-        if (
-          i + 1 < tempBars.length &&
-          tempBars[i].value < tempBars[i + 1].value
-        ) {
-          tempBars[i].selected = tempBars[i + 1].selected = 1;
-          stepCopy(tempBars);
-          tempBars[i].selected = tempBars[i + 1].selected = 0;
-          stepCopy(tempBars);
-        }
-        if (
-          i + 1 < tempBars.length &&
-          tempBars[i].value > tempBars[i + 1].value
-        ) {
-          tempBars[i].selected = tempBars[i + 1].selected = 1;
-          stepCopy(tempBars);
-          let temp = {
-            ...tempBars[i],
-          };
-          tempBars[i] = {
-            ...tempBars[i + 1],
-          };
-          tempBars[i + 1] = {
-            ...temp,
-          };
-          stepCopy(tempBars);
-          tempBars[i].selected = tempBars[i + 1].selected = 0;
-          stepCopy(tempBars);
-        }
-      }
-    }
-    start();
   }
-  function selectionSort() {}
-  function mergeSort() {
 
-    
-  }
   function quickSort() {}
 
   return (
     <main>
       <Sidebar
-        insertionSort={insertionSort}
-        bubbleSort={bubbleSort}
+        // setSelectedAlgorithm={setSelectedAlgorithm}
+        insertionSort={() => {
+          insertionSort(bars, stepClear, stepCopy, start);
+        }}
+        bubbleSort={() => {
+          bubbleSort(bars, stepClear, stepCopy, start);
+        }}
         selectionSort={selectionSort}
-        mergeSort={mergeSort}
+        mergeSort={() => {
+          mergeSort(bars, stepClear, stepCopy, start);
+        }}
         quickSort={quickSort}
       />
       <Main bars={bars} />
     </main>
   );
-}
+} 

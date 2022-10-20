@@ -7,7 +7,10 @@ export default function Sidebar(props) {
       <h1 className="sidebar-heading">Algorithms</h1>
       <div
         className="algorithms insertionSort selectedAlgorithm"
-        onClick={() => props.insertionSort()}
+        onClick={() =>
+          props.insertionSort()
+          // props.setSelectedAlgorithm("insertionSort")
+        }
       >
         Insertion sort
       </div>
