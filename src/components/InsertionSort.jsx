@@ -43,8 +43,7 @@ export default function insertionSort(bars, stepClear, stepCopy, start) {
     console.log("d");
     // do deep copy
     stepCopy(tempBars);
-  }
-  // console.log(steps.current);
-  // console.log(tempBars);
-  start(); 
+  } 
+  console.log("insertionSort");
+  start();
 }

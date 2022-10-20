@@ -34,6 +34,11 @@ main {
 .selectedAlgorithm {
   background: red;
 }
+.disabledAlgorithm {
+  background: black;
+  color: white;
+  border: 1px solid white;
+}
 .sidebar-button {
   border: 2px solid black;
   width: min-content;
@@ -47,7 +52,7 @@ main {
   cursor: pointer;
 }
 
-.sidebar-button:hover {
+.sidebar-button:hover, .disabledSidebarButton {
   background: black;
   color: white;
 }

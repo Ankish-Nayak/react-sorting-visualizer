@@ -6,7 +6,8 @@ import insertionSort from "./InsertionSort";
 import mergeSort from "./MergeSort";
 // done Changes here
 export default function App() {
-  // const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
+  const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
+  const [sorting,setSorting] = React.useState(false);
   const [bars, setBars] = React.useState(allNewBars);
   const steps = React.useRef([]);
   const timeOuts = React.useRef([]); // used to store setTimeout reference to clear it
@@ -18,7 +19,7 @@ export default function App() {
   function randomBar(range) {
     return Math.floor(Math.random() * range);
   }
-  function allNewBars(n = 17, range = 500) {
+  function allNewBars(n = 6, range = 500) {
     let res = [];
     for (let i = 0; i < n; ++i) {
       res.push({
@@ -29,23 +30,26 @@ export default function App() {
     return res;
   }
   function sortBars() {
-    // switch (selectedAlgorithm) {
-    //   case "insertionSort":
-    //     insertionSort(bars, stepClear, stepCopy, start)
-    //     break;
-    //   case "selectionSort":
-    //     break;
-    //   case "mergeSort":
-    //     mergeSort(bars, stepClear, stepCopy, start);
-    //     break;
-    //   case "quickSort":
-    //     break;
-    //   case "bubbleSort":
-    //     bubbleSort(bars, stepClear, stepCopy, start);
-    //     break;  
-    //   default:
-    //     console.log("problem");
-    // } 
+    setSorting(true);
+    console.log("sortBars");
+    switch (selectedAlgorithm) {
+      case "insertionSort":
+        insertionSort(bars, stepClear, stepCopy, start);
+        break;
+      case "selectionSort":
+        break;
+      case "mergeSort":
+        mergeSort(bars, stepClear, stepCopy, start);
+        break;
+      case "quickSort":
+        break;
+      case "bubbleSort":
+        bubbleSort(bars, stepClear, stepCopy, start);
+        break;  
+      default:
+        setSorting(false);
+        console.log("problem");
+    } 
   }
 
   function stepClear() {
@@ -67,17 +71,23 @@ export default function App() {
     console.log(steps.current);
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     let cnt = 0;
-    for (let i = 0; i < steps.current.length; ++i) {
-      console.log(steps.current[i]);
+    for (let i = 0; i < steps.current.length; ++i) { 
       const b = steps.current[i];
-      let timeOut;
+      const isLast = (i === steps.current.length-1 ? true : false);
+      let timeOut; 
       (() => {
-        timeOut = setTimeout((i) => {
+        timeOut = setTimeout((steps,i) => {
           setBars([...b]);
+          if(isLast){
+            console.log('done');
+            setSorting(false);
+            setSelectedAlgorithm("");
+          }
         }, i * 500);
       })();
       timeOuts.current.push(timeOut);
     }
+    console.log("start");
   }
   function selectionSort() {
     stepClear();
@@ -94,18 +104,10 @@ export default function App() {
   return (
     <main>
       <Sidebar
-        // setSelectedAlgorithm={setSelectedAlgorithm}
-        insertionSort={() => {
-          insertionSort(bars, stepClear, stepCopy, start);
-        }}
-        bubbleSort={() => {
-          bubbleSort(bars, stepClear, stepCopy, start);
-        }}
-        selectionSort={selectionSort}
-        mergeSort={() => {
-          mergeSort(bars, stepClear, stepCopy, start);
-        }}
-        quickSort={quickSort}
+        selectedAlgorithm={selectedAlgorithm}
+        setSelectedAlgorithm={setSelectedAlgorithm}
+        sortBars={sortBars}
+        sorting={sorting} 
       />
       <Main bars={bars} />
     </main>
