@@ -1,28 +1,32 @@
 import React, { startTransition } from "react";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
-import bubbleSort from "./BubbleSort";
-import insertionSort from "./InsertionSort";
-import mergeSort from "./MergeSort";
-import selectionSort from "./SelectionSort";
-import quickSort from "./QuickSort";
+import bubbleSort from "./algorithms/BubbleSort";
+import insertionSort from "./algorithms/InsertionSort";
+import mergeSort from "./algorithms/MergeSort";
+import selectionSort from "./algorithms/SelectionSort";
+import quickSort from "./algorithms/QuickSort";
 
 // done Changes here
 export default function App() {
+  const [ barCnt, setBarCnt] = React.useState(10);
+  const [ delay, setDelay] = React.useState(200);
   const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
   const [sorting, setSorting] = React.useState(false);
   const [bars, setBars] = React.useState(allNewBars);
   const steps = React.useRef([]);
   const timeOuts = React.useRef([]); // used to store setTimeout reference to clear it
-  React.useEffect(() => {
+  React.useEffect(() => { 
+    setBars(allNewBars(barCnt));
+    setSelectedAlgorithm("");
     return () => {
       timeOuts.current.forEach((timeOut) => clearTimeout(timeOut));
     };
-  }, []);
+  }, [barCnt]);
   function randomBar(range) {
     return Math.floor(Math.random() * range);
   }
-  function allNewBars(n = 6, range = 500) {
+  function allNewBars(n, range = 500) {
     let res = [];
     for (let i = 0; i < n; ++i) {
       res.push({
@@ -58,7 +62,7 @@ export default function App() {
   }
 
   function stepClear() {
-    while (steps.current.size > 0) {
+    while (steps.current.length > 0) {
       steps.current.pop();
     }
   }
@@ -88,15 +92,18 @@ export default function App() {
             setSorting(false);
             setSelectedAlgorithm("");
           }
-        }, i * 500);
+        }, i * delay);
       })();
       timeOuts.current.push(timeOut);
     }
+    stepClear();
     console.log("start");
   }
-  // function reStart(){
-  //   setBars(allNewBars);
-  // }
+  function reStart(){
+    setBars(()=>{
+      return allNewBars(barCnt);
+    });
+  }
 
   return (
     <main>
@@ -105,7 +112,12 @@ export default function App() {
         setSelectedAlgorithm={setSelectedAlgorithm}
         sortBars={sortBars}
         sorting={sorting}
-        // reStart={reStart}
+        reStart={reStart}
+        barCnt={barCnt}
+        setBarCnt={setBarCnt}
+        delay={delay}
+        setDelay={setDelay}
+        allNewBars={allNewBars}
       />
       <Main bars={bars} 
       />
