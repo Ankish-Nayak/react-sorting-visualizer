@@ -31,7 +31,7 @@ export default function App() {
     for (let i = 0; i < n; ++i) {
       res.push({
         value: randomBar(range),
-        selected: 0, // 0 comparing 1 compared and to be swap 2 sorted
+        color: "blue", // 
       });
     }
     return res;
@@ -83,6 +83,7 @@ export default function App() {
     for (let i = 0; i < steps.current.length; ++i) {
       const b = steps.current[i];
       const isLast = i === steps.current.length - 1 ? true : false;
+      console.log(b);
       let timeOut;
       (() => {
         timeOut = setTimeout((steps, i) => {

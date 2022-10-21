@@ -93,6 +93,18 @@ main {
   position: absolute; 
   /*  here we will explicitly add left property to make it as it mover along the x-axis  */
 }
+.red-bar{
+  background-color: red;;
+}
+.blue-bar {
+  background-color: blue;
+}
+.green-bar {
+  background-color: green;
+}
+.orange-bar {
+  background-color: orange;
+}
 /* .main {  
   display: flex;
   align-items: center;
