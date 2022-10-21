@@ -12,19 +12,19 @@ export default function bubbleSort(bars, stepClear, stepCopy, start) {
       // compare two adjacent elements
       // change > to < to sort in descending order
       if (
-        i + 1 < tempBars.length &&
+        i + 1 < (tempBars.length - step) &&
         tempBars[i].value < tempBars[i + 1].value
       ) {
-        tempBars[i].selected = tempBars[i + 1].selected = 1;
+        tempBars[i].color = tempBars[i + 1].color = 'red';
         stepCopy(tempBars);
-        tempBars[i].selected = tempBars[i + 1].selected = 0;
+        tempBars[i].color = tempBars[i + 1].color = 'blue';
         stepCopy(tempBars);
       }
       if (
-        i + 1 < tempBars.length &&
+        i + 1 < (tempBars.length - step) &&
         tempBars[i].value > tempBars[i + 1].value
       ) {
-        tempBars[i].selected = tempBars[i + 1].selected = 1;
+        tempBars[i].color = tempBars[i + 1].color = 'red';
         stepCopy(tempBars);
         let temp = {
           ...tempBars[i],
@@ -36,10 +36,14 @@ export default function bubbleSort(bars, stepClear, stepCopy, start) {
           ...temp,
         };
         stepCopy(tempBars);
-        tempBars[i].selected = tempBars[i + 1].selected = 0;
+        tempBars[i].color = tempBars[i + 1].color = 'blue';
         stepCopy(tempBars);
       }
     }
+    for(let i = (tempBars.length-(step+1)); i<tempBars.length; ++i){
+      tempBars[i].color = 'green';
+    }
+    stepCopy(tempBars); 
   }
   start();
 }

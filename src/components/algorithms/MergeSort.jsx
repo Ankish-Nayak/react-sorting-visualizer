@@ -12,10 +12,10 @@ export default function mergeSort(bars, stepClear, stepCopy, start) {
     let j = mid + 1;
     const temp = [];
     for (let k = l; k <= mid; ++k) {
-      bars[k].selected = true;
+      bars[k].color = 'red';
     }
     for (let k = mid + 1; k <= r; ++k) {
-      bars[k].selected = true;
+      bars[k].color = 'orange';
     }
     stepCopy(bars);
     while (i <= mid && j <= r) {
@@ -33,8 +33,8 @@ export default function mergeSort(bars, stepClear, stepCopy, start) {
     let tempIndex = 0;
     while (l <= r) {
       bars[l++] = temp[tempIndex++];
-    }
-    bars.forEach((bar) => (bar.selected = false));
+      bars[l-1].color = 'green';
+    } 
     stepCopy(bars);
   }
   function mergeSortHelper(bars, l, r) {
