@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react";  
 
 export default function Sidebar(props) {
   //   console.log("side bar rendered");
@@ -60,8 +60,8 @@ export default function Sidebar(props) {
         }}
       >
         sort
-      </div>
-      {/* {!props.sorting && <div className="sidebar-button" onClick={()=>props.reStart()}>New Array</div>} */}
+      </div> 
+      {!props.sorting && <div className="sidebar-button" onClick={()=>props.reStart()}>New Array</div>}
     </div>
   );
 }

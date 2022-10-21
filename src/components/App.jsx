@@ -9,6 +9,7 @@ import quickSort from "./QuickSort";
 
 // done Changes here
 export default function App() {
+  const [ barCnt, setBarCnt] = React.useState(100);
   const [selectedAlgorithm, setSelectedAlgorithm] = React.useState("");
   const [sorting, setSorting] = React.useState(false);
   const [bars, setBars] = React.useState(allNewBars);
@@ -94,9 +95,11 @@ export default function App() {
     }
     console.log("start");
   }
-  // function reStart(){
-  //   setBars(allNewBars);
-  // }
+  function reStart(){
+    setBars(()=>{
+      return allNewBars();
+    });
+  }
 
   return (
     <main>
@@ -105,7 +108,7 @@ export default function App() {
         setSelectedAlgorithm={setSelectedAlgorithm}
         sortBars={sortBars}
         sorting={sorting}
-        // reStart={reStart}
+        reStart={reStart}
       />
       <Main bars={bars} 
       />
