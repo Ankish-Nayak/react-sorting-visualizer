@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-sorting-visualizer/static/css/main.2bc03630.css",
+    "main.js": "/react-sorting-visualizer/static/js/main.f72028b2.js",
+    "index.html": "/react-sorting-visualizer/index.html",
+    "main.2bc03630.css.map": "/react-sorting-visualizer/static/css/main.2bc03630.css.map",
+    "main.f72028b2.js.map": "/react-sorting-visualizer/static/js/main.f72028b2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2bc03630.css",
+    "static/js/main.f72028b2.js"
+  ]
+}
