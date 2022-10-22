@@ -6,10 +6,10 @@ import DelaySlider from "./DelaySlider";
 export default function Sidebar(props) {
   //   console.log("side bar rendered");
   const algorithms = [
-    {
-      id: "insertionSort",
-      name: "Insertion Sort",
-    },
+    // {
+    //   id: "insertionSort",
+    //   name: "Insertion Sort",
+    // },
     {
       id: "selectionSort",
       name: "Selection Sort",
@@ -26,6 +26,10 @@ export default function Sidebar(props) {
       id: "bubbleSort",
       name: "Bubble Sort",
     },
+    {
+      id: "heapSort",
+      name: "Heap Sort"
+    }
   ];
 
   return (
@@ -35,7 +39,7 @@ export default function Sidebar(props) {
         let state = "";
         if (props.selectedAlgorithm === algorithm.id) {
           state = "selectedAlgorithm";
-        } else if (props.selectedAlgorithm !== "") {
+        } else if (props.sorting) {
           state = "disabledAlgorithm";
         }
         return (
@@ -73,6 +77,11 @@ export default function Sidebar(props) {
       {!props.sorting && (
         <div className="sidebar-button" onClick={() => props.reStart()}>
           New Array
+        </div>
+      )}
+      {props.sorting && (
+        <div className="sidebar-button" onClick={() => props.cancelSorting()}>
+          Cancel Sorting
         </div>
       )}
     </div>

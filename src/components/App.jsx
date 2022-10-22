@@ -6,6 +6,8 @@ import insertionSort from "./algorithms/InsertionSort";
 import mergeSort from "./algorithms/MergeSort";
 import selectionSort from "./algorithms/SelectionSort";
 import quickSort from "./algorithms/QuickSort";
+import GetMeasure  from './GetMeasure'
+import heapSort from "./algorithms/HeapSort";
 
 // done Changes here
 export default function App() {
@@ -23,6 +25,7 @@ export default function App() {
       timeOuts.current.forEach((timeOut) => clearTimeout(timeOut));
     };
   }, [barCnt]);
+  const barsContainerRef = React.useRef(); 
   function randomBar(range) {
     return Math.floor(Math.random() * range);
   }
@@ -38,11 +41,11 @@ export default function App() {
   }
   function sortBars() {
     setSorting(true);
-    console.log("sortBars");
+    // console.log("sortBars");
     switch (selectedAlgorithm) {
-      case "insertionSort":
-        insertionSort(bars, stepClear, stepCopy, start);
-        break;
+      // case "insertionSort":
+      //   insertionSort(bars, stepClear, stepCopy, start);
+      //   break;
       case "selectionSort":
         selectionSort(bars, stepClear, stepCopy, start);
         break;
@@ -55,9 +58,13 @@ export default function App() {
       case "bubbleSort":
         bubbleSort(bars, stepClear, stepCopy, start);
         break;
+      case "heapSort":
+        heapSort( bars, stepClear, stepCopy, start);
+        break;
       default:
+        alert("Select algorithm")
         setSorting(false);
-        console.log("problem");
+        // console.log("problem");
     }
   }
 
@@ -76,20 +83,18 @@ export default function App() {
     steps.current.push(newBars);
   }
   function start() {
-    console.log("called start");
-    console.log(steps.current);
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    let cnt = 0;
+    // console.log("called start");
+    // console.log(steps.current);
     for (let i = 0; i < steps.current.length; ++i) {
       const b = steps.current[i];
       const isLast = i === steps.current.length - 1 ? true : false;
-      console.log(b);
+      // console.log(b);
       let timeOut;
       (() => {
         timeOut = setTimeout((steps, i) => {
           setBars([...b]);
           if (isLast) {
-            console.log("done");
+            // console.log("done");
             setSorting(false);
             setSelectedAlgorithm("");
           }
@@ -98,12 +103,18 @@ export default function App() {
       timeOuts.current.push(timeOut);
     }
     stepClear();
-    console.log("start");
+    // console.log("start");
   }
   function reStart(){
     setBars(()=>{
       return allNewBars(barCnt);
     });
+  }
+  function cancelSorting(){
+    // console.log("cancelled sorting");
+    timeOuts.current.forEach(timeOut => clearTimeout(timeOut));
+    reStart();
+    setSorting(false);
   }
 
   return (
@@ -119,8 +130,13 @@ export default function App() {
         delay={delay}
         setDelay={setDelay}
         allNewBars={allNewBars}
+        cancelSorting={cancelSorting}
       />
       <Main bars={bars} 
+        barsContainerRef={barsContainerRef}
+        dimensions={()=>{
+          return GetMeasure(barsContainerRef);
+        }}
       />
     </main>
   );

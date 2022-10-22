@@ -13,7 +13,7 @@ export default function DelaySlider(props){
         console.log("delay complete")
     }
     return (<>
-        <p className="sidebar-slider">Set Delay</p>
+        <p className="sidebar-slider">Set Delay(ms)</p>
         <Slider
             min={0}
             max={500}

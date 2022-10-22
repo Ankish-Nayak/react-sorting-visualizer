@@ -86,52 +86,37 @@ main {
   background: blue;
   margin: 0px 1px;
   border: 2px solid black;
-  top: 25%;
-  left: 300px;
+  bottom: 25%; 
+  /* top: 25%; */
   transform: translate(-50%, 0);
   transition-timing-function: ease-in;
   position: absolute; 
   /*  here we will explicitly add left property to make it as it mover along the x-axis  */
 }
 .red-bar{
-  background-color: red;;
+  background-color: red;
+  color: white;
 }
 .blue-bar {
   background-color: blue;
+  color: white;
+
 }
 .green-bar {
+  color: white;
   background-color: green;
 }
 .orange-bar {
+  color: black;
   background-color: orange;
+} 
+.bar-text {
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%,0); 
+  font-weight: bold; 
 }
-/* .main {  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 75%;
-  border: 1px solid red;;
-  height: 100vh;
-}
-.bars {
-  display: flex;
-  align-content: center;
-  position: static;
-  border: 1px solid black;
-  transform: rotate(180deg);
-}
-.arrayInput {
-  padding: 4px;
-  width: max-content;
-}
-.bar {
-  width: 30px;
-  background: blue;
-  margin: 0px 1px;
-  position: relative;
-  border: 2px solid black;  
-} */
-
 .selectedBar { 
   background: red;
 }
