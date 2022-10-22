@@ -37,6 +37,7 @@ export default function quickSort(bars, stepClear, stepCopy, start) {
     }
     swap( bars, i+1, r);
     stepCopy(bars);
+    stepCopy(bars);
     bars[i+1].color='green';
     for(let k = l; k<=r; ++k){
         if(k !== i+1){
