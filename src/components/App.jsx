@@ -1,8 +1,8 @@
-import React, { startTransition } from "react";
+import React from "react";
 import Sidebar from "./Sidebar";
 import Main from "./Main";
 import bubbleSort from "./algorithms/BubbleSort";
-import insertionSort from "./algorithms/InsertionSort";
+// import insertionSort from "./algorithms/InsertionSort";
 import mergeSort from "./algorithms/MergeSort";
 import selectionSort from "./algorithms/SelectionSort";
 import quickSort from "./algorithms/QuickSort";
